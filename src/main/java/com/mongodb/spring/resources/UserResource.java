@@ -22,7 +22,7 @@ public class UserResource implements Serializable {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> findAll(){
+    public ResponseEntity<List<UserDTO>> findAll() {
         List<User> userList = userService.findAll();
         List<UserDTO> userDTOList = userList.stream()
                 .map(x -> new UserDTO(x))
@@ -31,24 +31,30 @@ public class UserResource implements Serializable {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable String id){
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User user = userService.findById(id);
         UserDTO userDTO = new UserDTO(user);
         return ResponseEntity.ok().body(userDTO);
     }
 
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User user){
+    public ResponseEntity<User> insert(@RequestBody User user) {
         userService.insert(user);
         return ResponseEntity.ok().body(user);
     }
 
     @DeleteMapping("{id}")
-    public  ResponseEntity<Void> deleteById(@PathVariable String id) {
+    public ResponseEntity<Void> deleteById(@PathVariable String id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
 
     }
 
-    //@PutMapping
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id) {
+        User obj = userService.fromDTO(objDTO);
+        obj.setId(id);
+        obj = userService.update(obj);
+        return ResponseEntity.noContent().build();
+    }
 }

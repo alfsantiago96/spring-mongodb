@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service //Regras de negócio e as Quatro operações basicas de CRUD
 public class UserService implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,13 +31,27 @@ public class UserService implements Serializable {
         return userRepository.insert(user);
     }
 
-    /*public User formDTO(UserDTO userDTO){
-        return new User(userDTO.getId(),userDTO.getName(),userDTO.getEmail());
-    }*/
+    //TODO
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail(), "");
+    }
 
     public void deleteById(String id){
         findById(id);
         userRepository.deleteById(id);
     }
+
+    public User update(User obj) {
+        User newObj = findById(obj.getId());
+        updateData(newObj, obj);
+        return userRepository.save(newObj);
+    }
+
+    private void updateData(User newObj, User obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
+
+
 
 }
