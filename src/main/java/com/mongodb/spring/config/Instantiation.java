@@ -2,6 +2,7 @@ package com.mongodb.spring.config;
 
 import com.mongodb.spring.domain.Post;
 import com.mongodb.spring.domain.User;
+import com.mongodb.spring.dto.AuthorDTO;
 import com.mongodb.spring.repositories.PostRepository;
 import com.mongodb.spring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,13 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com", "222");
         User bob = new User(null, "Bob Grey", "bob@gmail.com", "666");
 
-        Post post1 = new Post(null, new Date(), "Summer Feelings", "Viver durate o verão é ótiomo!", bob);
-        Post post2 = new Post(null, new Date(), "Winter Cold", "O inverno está chegando", alex);
-        Post post3 = new Post(null, new Date(), "Férias com a Familia", "Bora meter a festa do covid", bob);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, new Date(), "Summer Feelings", "Viver durate o verão é ótiomo!", new AuthorDTO(bob));
+        Post post2 = new Post(null, new Date(), "Winter Cold", "O inverno está chegando", new AuthorDTO(alex));
+        Post post3 = new Post(null, new Date(), "Férias com a Familia", "Bora meter a festa do covid", new AuthorDTO(bob));
+
+
         postRepository.saveAll(Arrays.asList(post1,post2,post3));
 
 

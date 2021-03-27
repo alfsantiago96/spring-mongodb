@@ -42,7 +42,7 @@ public class PostService implements Serializable {
     }
 
     public void updateNewObj(Post newObj, Post postBody){
-        newObj.setUser(postBody.getUser());
+        newObj.setAuthorDTO(postBody.getAuthorDTO());
         newObj.setTitle(postBody.getTitle());
         newObj.setBody(postBody.getBody());
         newObj.setDate(postBody.getDate());
