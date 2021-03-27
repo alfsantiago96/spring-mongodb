@@ -1,5 +1,6 @@
 package com.mongodb.spring.resources;
 
+import com.mongodb.spring.domain.Post;
 import com.mongodb.spring.domain.User;
 import com.mongodb.spring.dto.UserDTO;
 import com.mongodb.spring.services.UserService;
@@ -33,8 +34,13 @@ public class UserResource implements Serializable {
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User user = userService.findById(id);
-        UserDTO userDTO = new UserDTO(user);
-        return ResponseEntity.ok().body(userDTO);
+        return ResponseEntity.ok().body(new UserDTO(user));
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPostList());
     }
 
     @PostMapping

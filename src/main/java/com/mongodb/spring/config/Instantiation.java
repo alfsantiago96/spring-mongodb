@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -40,6 +41,9 @@ public class Instantiation implements CommandLineRunner {
 
 
         postRepository.saveAll(Arrays.asList(post1,post2,post3));
+
+        bob.getPostList().addAll(Arrays.asList(post1,post3));
+        userRepository.save(bob);
 
 
     }
